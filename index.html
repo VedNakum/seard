@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Form</title>
+    <style>
+        header {
+            background-color: #f2f2f2;
+            padding: 10px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        header img {
+            width: 50px;
+            height: 50px;
+            margin-top: 10px;
+        }
+
+        #searchIframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+        }
+    </style>
+    <script async src="https://cse.google.com/cse.js?cx=625648ad3a4fb4dbf"></script>
+</head>
+<body>
+    <header>
+        <img src="Image.jpg" alt="Logo">
+        <h1>Search Engine</h1>
+    </header>
+
+    <div id="searchContainer">
+        <form onsubmit="performSearch(event)">
+            <input type="text" id="searchInput" placeholder="Search" />
+            <input type="submit" value="Go" />
+
+            <select id="browserSelect">
+                <option value="google">Google</option>
+                <option value="bing">Bing</option>
+                <option value="duckduckgo">DuckDuckGo</option>
+            </select>
+        </form>
+    </div>
+
+    <iframe id="searchIframe"></iframe>
+
+    <div id="lastSearchContainer">
+        <h3>Last Search:</h3>
+        <p id="lastSearch"></p>
+    </div>
+
+    <script>
+        function performSearch(event) {
+            event.preventDefault();
+            var userInput = document.getElementById("searchInput").value;
+            var selectedBrowser = document.getElementById("browserSelect").value;
+
+            if (selectedBrowser === "google") {
+                // Perform search using Google CSE
+                var searchBox = document.querySelector(".gsc-input");
+                searchBox.value = userInput;
+                searchBox.parentElement.submit();
+            } else {
+                // Perform search using selected browser
+                searchQuestion(userInput, selectedBrowser);
+            }
+        }
+
+        function searchQuestion(question, browser) {
+            var searchURL;
+
+            if (browser === "bing") {
+                searchURL = "https://www.bing.com/search?q=" + encodeURIComponent(question);
+            } else if (browser === "duckduckgo") {
+                searchURL = "https://duckduckgo.com/html/?q=" + encodeURIComponent(question);
+            } else {
+                searchURL = ""; // Add support for other search engines if desired
+            }
+
+            var searchIframe = document.getElementById("searchIframe");
+            searchIframe.src = searchURL;
+        }
+    </script>
+</body>
+</html>
+
+
+
